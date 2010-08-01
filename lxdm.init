@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# lxdm:		Starts the LXDE Display Manager
+#
+# Version:	@(#) /etc/rc.d/init.d/lxdm 0.1
+#
+# chkconfig:	5 95 05
+# description:	Starts and stops the LXDM Display Manager at startup and \
+#		shutdown..
+#
+# config:	/etc/X11/gdm/gdm-config
+# probe:	true
+# hide:		true
+
+. /etc/rc.d/init.d/functions
+
+# Get service config
+# if [ -f /etc/sysconfig/gdm ]; then
+# 	. /etc/sysconfig/gdm
+#fi
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/lxdm ]; then
+		msg_starting "LXDE Display Manager"
+		start-stop-daemon --start -b --exec /usr/sbin/lxdm
+		ok
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/lxdm
+	else
+		msg_already_running "LXDE Display Manager"
+	fi
+	;;
+  stop)
+	if [ -f /var/lock/subsys/lxdm ]; then
+		msg_stopping "LXDE Display Manager"
+		killproc lxdm
+		rm -f /var/lock/subsys/lxdm
+	else
+		msg_not_running "LXDE Display Manager"
+	fi
+	;;
+  status)
+	status lxdm lxdm-binary
+	exit $?
+	;;
+  restart|force-reload)
+	$0 stop
+	$0 start
+	exit $?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
