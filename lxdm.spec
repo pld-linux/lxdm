@@ -1,3 +1,4 @@
+# TODO: make it work
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.2.0
