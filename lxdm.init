@@ -2,57 +2,80 @@
 #
 # lxdm:		Starts the LXDE Display Manager
 #
-# Version:	@(#) /etc/rc.d/init.d/lxdm 0.1
-#
 # chkconfig:	5 95 05
+#
 # description:	Starts and stops the LXDM Display Manager at startup and \
 #		shutdown..
 #
 # probe:	true
 # hide:		true
+#
+# $Id$
 
+# Source function library
 . /etc/rc.d/init.d/functions
 
-# Get service config
-# if [ -f /etc/sysconfig/gdm ]; then
-# 	. /etc/sysconfig/gdm
-#fi
+start() {
+	# Check if the service is already running?
+	if [ -f /var/lock/subsys/lxdm ]; then
+		msg_already_running "LXDE Display Manager"
+		return
+	fi
+
+	msg_starting "LXDE Display Manager"
+	start-stop-daemon --start -b --exec /usr/sbin/lxdm -- -d
+	ok
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/lxdm
+}
+
+stop() {
+	if [ ! -f /var/lock/subsys/lxdm ]; then
+		msg_not_running "LXDE Display Manager"
+		return
+	fi
+
+	# Stop daemons.
+	msg_stopping "LXDE Display Manager"
+	killproc lxdm
+	rm -f /var/lock/subsys/lxdm
+}
+
+condrestart() {
+	if [ ! -f /var/lock/subsys/lxdm ]; then
+		msg_not_running "LXDE Display Manager"
+		RETVAL=$1
+		return
+	fi
+
+	stop
+	start
+}
 
 RETVAL=0
 # See how we were called.
 case "$1" in
   start)
-	# Check if the service is already running?
-	if [ ! -f /var/lock/subsys/lxdm ]; then
-		msg_starting "LXDE Display Manager"
-		start-stop-daemon --start -b --exec /usr/sbin/lxdm -- -d
-		ok
-		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/lxdm
-	else
-		msg_already_running "LXDE Display Manager"
-	fi
+	start
 	;;
   stop)
-	if [ -f /var/lock/subsys/lxdm ]; then
-		msg_stopping "LXDE Display Manager"
-		killproc lxdm
-		rm -f /var/lock/subsys/lxdm
-	else
-		msg_not_running "LXDE Display Manager"
-	fi
+	stop
+	;;
+  restart)
+	stop
+	start
+	;;
+  try-restart)
+	condrestart 0
+	;;
+  force-reload)
+	condrestart 7
 	;;
   status)
 	status lxdm lxdm-binary
-	exit $?
-	;;
-  restart|force-reload)
-	$0 stop
-	$0 start
-	exit $?
+	RETVAL=$?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|force-reload|status}"
 	exit 3
 esac
 
