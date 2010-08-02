@@ -8,7 +8,6 @@
 # description:	Starts and stops the LXDM Display Manager at startup and \
 #		shutdown..
 #
-# config:	/etc/X11/gdm/gdm-config
 # probe:	true
 # hide:		true
 
@@ -26,7 +25,7 @@ case "$1" in
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/lxdm ]; then
 		msg_starting "LXDE Display Manager"
-		start-stop-daemon --start -b --exec /usr/sbin/lxdm
+		start-stop-daemon --start -b --exec /usr/sbin/lxdm -- -d
 		ok
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/lxdm
