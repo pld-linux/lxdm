@@ -10,7 +10,7 @@ Source1:	%{name}.pamd
 Source2:	%{name}.init
 Source3:	%{name}.Xsession
 Patch0:		%{name}-setuid.patch
-URL:		http://lxde.sourceforge.net/
+URL:		http://wiki.lxde.org/en/LXDM
 BuildRequires:	ConsoleKit-devel
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel
@@ -20,7 +20,7 @@ BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Light weight X11 display manager
+Light weight X11 display manager.
 
 %package init
 Summary:	Init script for lxdm
@@ -51,9 +51,9 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,pam.d}
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/lxdm
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/lxdm
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/lxdm/Xsession
+cp -a %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/lxdm
+install -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/lxdm
+install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/lxdm/Xsession
 
 %find_lang %{name}
 
