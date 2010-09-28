@@ -1,0 +1,10 @@
+--- lxdm-0.3.0/src/ui.c.old	2010-09-28 11:29:22.000000000 +0200
++++ lxdm-0.3.0/src/ui.c	2010-09-28 11:29:40.000000000 +0200
+@@ -196,6 +196,7 @@ void ui_prepare(void)
+ 		struct passwd *pw;
+ 		g_shell_parse_argv(p, NULL, &argv, NULL);
+ 		pw=getpwnam("lxdm");endpwent();
++		setuid(0);
+ 		ret = g_spawn_async_with_pipes(NULL, argv, NULL,
+ 				   G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,greeter_setup, pw,
+ 				   &greeter, greeter_pipe + 0, greeter_pipe + 1, NULL, NULL);

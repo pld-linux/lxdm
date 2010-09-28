@@ -1,0 +1,57 @@
+--- lxdm-0.3.0/po/pl.po.old	2010-09-28 11:42:26.000000000 +0200
++++ lxdm-0.3.0/po/pl.po	2010-09-28 11:43:16.000000000 +0200
+@@ -25,18 +25,18 @@ msgstr "Pulpit:"
+ 
+ #: ../data/lxdm.glade.h:2
+ msgid "Keyboard Layout:"
+-msgstr "UkÅ?ad klawiatury:"
++msgstr "Układ klawiatury:"
+ 
+ #: ../data/lxdm.glade.h:3
+ msgid "Language:"
+-msgstr "JÄ?zyk:"
++msgstr "Język:"
+ 
+ #: ../data/lxdm.glade.h:4
+ #: ../src/greeter.c:163
+ #: ../src/greeter.c:540
+ #: ../src/greeter.c:810
+ msgid "User:"
+-msgstr "UÅ¼ytkownik:"
++msgstr "Użytkownik:"
+ 
+ #: ../src/gdm/gdm-languages.c:611
+ msgid "Unspecified"
+@@ -45,12 +45,12 @@ msgstr "Niezdefiniowany"
+ #: ../src/greeter.c:102
+ #: ../src/greeter.c:526
+ msgid "Password:"
+-msgstr "HasÅ?o:"
++msgstr "Hasło:"
+ 
+ #: ../src/greeter.c:231
+ #: ../src/lang.c:103
+ msgid "Default"
+-msgstr "DomyÅ?lny"
++msgstr "Domyślny"
+ 
+ #: ../src/greeter.c:421
+ msgid "_Reboot"
+@@ -58,7 +58,7 @@ msgstr "_Uruchom ponownie"
+ 
+ #: ../src/greeter.c:425
+ msgid "_Shutdown"
+-msgstr "_WyÅ?Ä?cz komputer"
++msgstr "_Wyłącz komputer"
+ 
+ #: ../src/greeter.c:613
+ msgid ""
+@@ -71,7 +71,7 @@ msgstr ""
+ #: ../src/greeter.c:626
+ #: ../src/lang.c:125
+ msgid "More ..."
+-msgstr "WiÄ?cej..."
++msgstr "Więcej..."
+ 
+ #~ msgid "US English"
+ #~ msgstr "Angielski US"
