@@ -1,15 +1,14 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
-Version:	0.2.0
+Version:	0.3.0
 Release:	1
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
-# Source0-md5:	e539f81ba691f2b0cb2017b82dfee58f
+# Source0-md5:	1d0688e088edab7c3c563263eb2f9654
 Source1:	%{name}.pamd
 Source2:	%{name}.init
 Source3:	%{name}.Xsession
-Patch0:		%{name}-setuid.patch
 URL:		http://wiki.lxde.org/en/LXDM
 BuildRequires:	ConsoleKit-devel
 BuildRequires:	gettext-devel
@@ -38,7 +37,6 @@ Skrypt init dla lxdm-a.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 rm -f data/lxdm.conf
@@ -71,12 +69,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %config %{_sysconfdir}/lxdm/PreReboot
 %attr(755,root,root) %config %{_sysconfdir}/lxdm/PreShutdown
 %attr(755,root,root) %config %{_sysconfdir}/lxdm/Xsession
-%config %{_sysconfdir}/lxdm/lxdm.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lxdm/lxdm.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/lxdm
 %attr(755,root,root) %{_sbindir}/lxdm
 %attr(755,root,root) %{_sbindir}/lxdm-binary
-%{_datadir}/lxdm
 %attr(755,root,root) %{_libexecdir}/lxdm-greeter-gtk
+%attr(755,root,root) %{_libdir}/lxdm-greeter-gdk
+%attr(755,root,root) %{_libdir}/lxdm-numlock
+%{_datadir}/lxdm
 
 %files init
 %defattr(644,root,root,755)
