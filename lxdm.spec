@@ -18,6 +18,7 @@ BuildRequires:	gtk+2-devel
 BuildRequires:	intltool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
+Requires:	xinitrc-ng
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
