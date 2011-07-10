@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.3.0
-Release:	5
+Release:	6
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -32,8 +32,7 @@ Summary:	Init script for lxdm
 Summary(pl.UTF-8):	Skrypt init dla lxdm-a
 Group:		X11/Applications
 Requires(post,preun):	/sbin/chkconfig
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	open
+Requires:	%{name} = %{version}-%{release}
 Requires:	rc-scripts
 
 %description init
