@@ -1,0 +1,14 @@
+--- lxdm-0.3.0/src/lxdm.c~	2010-09-24 18:43:49.000000000 +0300
++++ lxdm-0.3.0/src/lxdm.c	2011-07-10 22:35:30.209784033 +0300
+@@ -1560,6 +1560,11 @@
+ 	{
+ 		if(strstr(pw->pw_shell, "nologin"))
+ 			continue;
++
++		// PLD Linux: skip users with homedir = /home/services
++		if(!strncmp(pw->pw_dir,"/home/services/",15))
++			continue;
++
+ 		if(strncmp(pw->pw_dir,"/home/",6))
+ 		{
+ 			if(!strv_find(white,pw->pw_name))

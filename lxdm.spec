@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.3.0
-Release:	3
+Release:	4
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -11,6 +11,7 @@ Source2:	%{name}.init
 Source3:	%{name}.Xsession
 Patch0:		%{name}-setuid.patch
 Patch1:		%{name}-pl.po.patch
+Patch2:		greeter-skip-services.patch
 URL:		http://wiki.lxde.org/en/LXDM
 BuildRequires:	ConsoleKit-devel
 BuildRequires:	gettext-devel
@@ -43,6 +44,7 @@ Skrypt init dla lxdm-a.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 rm -f data/lxdm.conf
