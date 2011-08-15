@@ -19,9 +19,9 @@ BuildRequires:	gtk+2-devel
 BuildRequires:	intltool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
-Requires:	openbox
 Requires:	xinitrc-ng
 Suggests:	%{name}-init
+Suggests:	openbox
 Provides:	XDM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
