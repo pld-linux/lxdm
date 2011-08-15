@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.4.1
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -21,6 +21,7 @@ BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 Requires:	openbox
 Requires:	xinitrc-ng
+Suggests:	%{name}-init
 Provides:	XDM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
