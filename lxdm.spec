@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.4.1
-Release:	2
+Release:	3
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -62,6 +62,7 @@ cp -p %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/lxdm
 cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/init/%{name}.conf
 install -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/lxdm
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/Xsession
+touch $RPM_BUILD_ROOT/etc/security/blacklist.lxdm
 
 %find_lang %{name}
 
@@ -81,6 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %config %{_sysconfdir}/%{name}/Xsession
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/%{name}.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/%{name}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.lxdm
 %attr(755,root,root) %{_bindir}/%{name}-config
 %attr(755,root,root) %{_sbindir}/%{name}
 %attr(755,root,root) %{_sbindir}/%{name}-binary
