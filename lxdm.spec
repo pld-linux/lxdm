@@ -19,6 +19,7 @@ BuildRequires:	gtk+2-devel
 BuildRequires:	intltool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
+Requires:	/usr/bin/X
 Requires:	xinitrc-ng
 Suggests:	%{name}-init
 Suggests:	openbox
