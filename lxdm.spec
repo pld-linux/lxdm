@@ -36,7 +36,7 @@ Summary(pl.UTF-8):	Skrypt init dla lxdm-a
 Group:		X11/Applications
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name} = %{version}-%{release}
-Requires:	rc-scripts
+Requires:	rc-scripts >= 0.4.3.0
 
 %description init
 Init script for lxdm.
