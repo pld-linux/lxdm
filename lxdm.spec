@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.4.1
-Release:	5
+Release:	6
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -19,9 +19,11 @@ BuildRequires:	gtk+2-devel
 BuildRequires:	intltool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.627
 Requires:	/usr/bin/X
 Requires:	iso-codes
-Requires:	xinitrc-ng
+Requires:	systemd-units >= 37-0.10
+Requires:	xinitrc-ng >= 1.0
 Suggests:	%{name}-init
 Suggests:	openbox
 Provides:	XDM
@@ -66,10 +68,18 @@ install -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/lxdm
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/Xsession
 touch $RPM_BUILD_ROOT/etc/security/blacklist.lxdm
 
+ln -s /dev/null $RPM_BUILD_ROOT%{systemdunitdir}/lxdm.service
+
 %find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+%systemd_reload
+
+%postun
+%systemd_reload
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -92,6 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}-greeter-gdk
 %attr(755,root,root) %{_libdir}/%{name}-numlock
 %{_datadir}/%{name}
+%{systemdunitdir}/lxdm.service
 
 %files init
 %defattr(644,root,root,755)
