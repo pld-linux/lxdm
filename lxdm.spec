@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.4.1
-Release:	7
+Release:	8
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -104,9 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}-greeter-gdk
 %attr(755,root,root) %{_libdir}/%{name}-numlock
 %{_datadir}/%{name}
-%{systemdunitdir}/lxdm.service
 
 %files init
 %defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %config(noreplace) %verify(not md5 mtime size) /etc/init/%{name}.conf
+%{systemdunitdir}/lxdm.service
