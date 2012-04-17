@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.4.1
-Release:	8
+Release:	9
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -22,7 +22,6 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.627
 Requires:	/usr/bin/X
 Requires:	iso-codes
-Requires:	systemd-units >= 37-0.10
 Requires:	xinitrc-ng >= 1.0
 Suggests:	%{name}-init
 Suggests:	openbox
@@ -37,8 +36,10 @@ Summary:	Init script for lxdm
 Summary(pl.UTF-8):	Skrypt init dla lxdm-a
 Group:		X11/Applications
 Requires(post,preun):	/sbin/chkconfig
+Requires(post,postun):	systemd-units >= 38
 Requires:	%{name} = %{version}-%{release}
 Requires:	rc-scripts >= 0.4.3.0
+Requires:	systemd-units >= 38
 
 %description init
 Init script for lxdm.
