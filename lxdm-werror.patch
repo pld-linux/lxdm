@@ -1,0 +1,12 @@
+diff -ur lxdm-0.4.1.orig/src/ui.c lxdm-0.4.1.fix/src/ui.c
+--- lxdm-0.4.1.orig/src/ui.c	2013-07-19 07:38:38.000000000 +0000
++++ lxdm-0.4.1.fix/src/ui.c	2013-07-19 07:53:15.643067820 +0000
+@@ -146,7 +146,7 @@
+ 	else if( !strncmp(str, "shutdown", 6) )
+ 		lxdm_do_shutdown();
+ 	else if( !strncmp(str, "log ", 4) )
+-		g_message(str + 4);
++		g_message("%s", str + 4);
+ 	else if( !strncmp(str, "login ", 6) )
+ 	{
+ 		char *user = greeter_param(str, "user");
