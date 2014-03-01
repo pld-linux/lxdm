@@ -12,4 +12,5 @@ password	include		system-auth
 session		optional	pam_keyinit.so force revoke
 session		optional	pam_console.so
 -session	optional	pam_gnome_keyring.so auto_start
+-session	optional	pam_ck_connector.so
 session		include		system-auth
