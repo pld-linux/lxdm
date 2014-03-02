@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.4.1
-Release:	11
+Release:	12
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -82,10 +82,10 @@ ln -s /dev/null $RPM_BUILD_ROOT%{systemdunitdir}/lxdm.service
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
+%post init
 %systemd_reload
 
-%postun
+%postun init
 %systemd_reload
 
 %files -f %{name}.lang
