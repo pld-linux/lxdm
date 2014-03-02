@@ -6,12 +6,9 @@
 #
 # description:	Starts and stops the LXDM Display Manager at startup and \
 #		shutdown..
-#
 # probe:	true
 # hide:		true
 #
-# $Id$
-
 # Source function library
 . /etc/rc.d/init.d/functions
 
