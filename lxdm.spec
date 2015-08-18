@@ -1,7 +1,7 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
 Version:	0.4.1
-Release:	13
+Release:	14
 License:	GPL v3
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
@@ -9,7 +9,6 @@ Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
 Source1:	%{name}.pamd
 Source2:	%{name}.init
 Source3:	%{name}.Xsession
-Source4:	%{name}.upstart
 Patch0:		%{name}-setuid.patch
 Patch1:		greeter-skip-services.patch
 Patch2:		softlockup.patch
@@ -63,14 +62,13 @@ rm -f data/lxdm.conf
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,init,pam.d,security} \
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,pam.d,security} \
 	$RPM_BUILD_ROOT%{systemdunitdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 cp -p %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/lxdm
-cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/init/%{name}.conf
 install -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/lxdm
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/Xsession
 touch $RPM_BUILD_ROOT/etc/security/blacklist.lxdm
@@ -121,5 +119,4 @@ fi
 %files init
 %defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
-%config(noreplace) %verify(not md5 mtime size) /etc/init/%{name}.conf
 %{systemdunitdir}/lxdm.service
