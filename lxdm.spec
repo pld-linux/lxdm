@@ -1,18 +1,16 @@
 Summary:	Light weight X11 display manager
 Name:		lxdm
-Version:	0.4.1
-Release:	14
+Version:	0.5.1
+Release:	1
 License:	GPL v3
 Group:		X11/Applications
-Source0:	http://downloads.sourceforge.net/lxde/%{name}-%{version}.tar.gz
-# Source0-md5:	8da1cfc2be6dc9217c85a7cf51e1e821
+Source0:	http://downloads.sourceforge.net/lxdm/%{name}-%{version}.tar.xz
+# Source0-md5:	9e03ce5f6d303bc9b689732401934dc6
 Source1:	%{name}.pamd
 Source2:	%{name}.init
 Source3:	%{name}.Xsession
 Patch0:		%{name}-setuid.patch
 Patch1:		greeter-skip-services.patch
-Patch2:		softlockup.patch
-Patch3:		%{name}-werror.patch
 URL:		http://wiki.lxde.org/en/LXDM
 BuildRequires:	ConsoleKit-devel
 BuildRequires:	gettext-tools
@@ -52,8 +50,6 @@ Skrypt init dla lxdm-a.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 rm -f data/lxdm.conf
@@ -63,7 +59,7 @@ rm -f data/lxdm.conf
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,pam.d,security} \
-	$RPM_BUILD_ROOT%{systemdunitdir}
+	$RPM_BUILD_ROOT{/etc/systemd/system,%{systemdunitdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -73,7 +69,7 @@ install -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/lxdm
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/Xsession
 touch $RPM_BUILD_ROOT/etc/security/blacklist.lxdm
 
-ln -s /dev/null $RPM_BUILD_ROOT%{systemdunitdir}/lxdm.service
+ln -s /dev/null $RPM_BUILD_ROOT/etc/systemd/system/lxdm.service
 
 %find_lang %{name}
 
@@ -114,9 +110,11 @@ fi
 %attr(755,root,root) %{_libexecdir}/%{name}-greeter-gtk
 %attr(755,root,root) %{_libdir}/%{name}-greeter-gdk
 %attr(755,root,root) %{_libdir}/%{name}-numlock
+%attr(755,root,root) %{_libdir}/%{name}-session
 %{_datadir}/%{name}
+%{systemdunitdir}/lxdm.service
 
 %files init
 %defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
-%{systemdunitdir}/lxdm.service
+%config(noreplace) %verify(not md5 mtime size) /etc/systemd/system/lxdm.service
