@@ -1,8 +1,8 @@
---- lxdm-0.3.0/src/ui.c.old	2010-09-28 11:29:22.000000000 +0200
-+++ lxdm-0.3.0/src/ui.c	2010-09-28 11:29:40.000000000 +0200
-@@ -196,6 +196,7 @@ void ui_prepare(void)
- 		struct passwd *pw;
- 		g_shell_parse_argv(p, NULL, &argv, NULL);
+--- lxdm-0.5.3/src/ui.c.orig	2023-05-06 08:01:13.387616230 +0200
++++ lxdm-0.5.3/src/ui.c	2023-05-06 08:02:24.333898548 +0200
+@@ -244,6 +244,7 @@ void ui_prepare(void)
+ 			first=FALSE;
+ 		}
  		pw=getpwnam("lxdm");endpwent();
 +		setuid(0);
  		ret = g_spawn_async_with_pipes(NULL, argv, NULL,

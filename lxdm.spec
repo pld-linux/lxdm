@@ -1,36 +1,50 @@
+#
+# Conditional build:
+%bcond_with	gtk3	# use GTK+3 instead of GTK+2
+
 Summary:	Light weight X11 display manager
+Summary(pl.UTF-8):	Lekki zarządca ekranów X11
 Name:		lxdm
 Version:	0.5.3
 Release:	1
-License:	GPL v3
+License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://downloads.sourceforge.net/lxdm/%{name}-%{version}.tar.xz
+Source0:	https://downloads.sourceforge.net/lxdm/%{name}-%{version}.tar.xz
 # Source0-md5:	061caae432634e6db38bbdc84bc6ffa0
 Source1:	%{name}.pamd
 Source2:	%{name}.init
 Source3:	%{name}.Xsession
 Patch0:		%{name}-setuid.patch
 Patch1:		greeter-skip-services.patch
-URL:		http://wiki.lxde.org/en/LXDM
+URL:		http://www.lxde.org/
 BuildRequires:	ConsoleKit-devel
 BuildRequires:	gettext-tools
-BuildRequires:	gtk+2-devel
-BuildRequires:	intltool
+BuildRequires:	glib2-devel >= 2.0
+%{!?with_gtk3:BuildRequires:	gtk+2-devel >= 2:2.12.0}
+%{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.0.0}
+BuildRequires:	intltool >= 0.40.0
+BuildRequires:	iso-codes
+BuildRequires:	libxcb-devel
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.627
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xz
 Requires:	/usr/bin/X
+%{!?with_gtk3:Requires:	gtk+2 >= 2:2.12.0}
 Requires:	iso-codes
 Requires:	xinitrc-ng >= 1.0
-Suggests:	%{name}-init
+Suggests:	%{name}-init = %{version}-%{release}
 Suggests:	openbox
 Provides:	XDM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Light weight X11 display manager.
+
+%description -l pl.UTF-8
+Lekki zarządca ekranów X11.
 
 %package init
 Summary:	Init script for lxdm
@@ -53,9 +67,13 @@ Skrypt init dla lxdm-a.
 %patch0 -p1
 %patch1 -p1
 
+%{__rm} data/lxdm.conf
+
 %build
-rm -f data/lxdm.conf
-%configure
+%configure \
+	--with-pam \
+	--with-systemdsystemunitdir=%{systemdunitdir}
+
 %{__make}
 
 %install
@@ -72,6 +90,9 @@ install -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/Xsession
 touch $RPM_BUILD_ROOT/etc/security/blacklist.lxdm
 
 ln -s /dev/null $RPM_BUILD_ROOT/etc/systemd/system/lxdm.service
+
+# duplicate of ur
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ur_PK
 
 %find_lang %{name}
 
@@ -104,19 +125,19 @@ fi
 %attr(755,root,root) %config %{_sysconfdir}/%{name}/PreShutdown
 %attr(755,root,root) %config %{_sysconfdir}/%{name}/Xsession
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/%{name}.conf
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/%{name}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/lxdm
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.lxdm
-%attr(755,root,root) %{_bindir}/%{name}-config
-%attr(755,root,root) %{_sbindir}/%{name}
-%attr(755,root,root) %{_sbindir}/%{name}-binary
-%attr(755,root,root) %{_libexecdir}/%{name}-greeter-gtk
-%attr(755,root,root) %{_libdir}/%{name}-greeter-gdk
-%attr(755,root,root) %{_libdir}/%{name}-numlock
-%attr(755,root,root) %{_libdir}/%{name}-session
+%attr(755,root,root) %{_bindir}/lxdm-config
+%attr(755,root,root) %{_sbindir}/lxdm
+%attr(755,root,root) %{_sbindir}/lxdm-binary
+%attr(755,root,root) %{_libexecdir}/lxdm-greeter-gtk
+%attr(755,root,root) %{_libdir}/lxdm-greeter-gdk
+%attr(755,root,root) %{_libdir}/lxdm-numlock
+%attr(755,root,root) %{_libdir}/lxdm-session
 %{_datadir}/%{name}
 %{systemdunitdir}/lxdm.service
 
 %files init
 %defattr(644,root,root,755)
-%attr(754,root,root) /etc/rc.d/init.d/%{name}
+%attr(754,root,root) /etc/rc.d/init.d/lxdm
 %config(noreplace) %verify(not md5 mtime size) /etc/systemd/system/lxdm.service
