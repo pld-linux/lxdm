@@ -1,12 +1,12 @@
 #
 # Conditional build:
-%bcond_with	gtk3	# use GTK+3 instead of GTK+2
+%bcond_without	gtk3	# use GTK+3 instead of GTK+2
 
 Summary:	Light weight X11 display manager
 Summary(pl.UTF-8):	Lekki zarządca ekranów X11
 Name:		lxdm
 Version:	0.5.3
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	https://downloads.sourceforge.net/lxdm/%{name}-%{version}.tar.xz
@@ -131,9 +131,9 @@ fi
 %attr(755,root,root) %{_sbindir}/lxdm
 %attr(755,root,root) %{_sbindir}/lxdm-binary
 %attr(755,root,root) %{_libexecdir}/lxdm-greeter-gtk
-%attr(755,root,root) %{_libdir}/lxdm-greeter-gdk
-%attr(755,root,root) %{_libdir}/lxdm-numlock
-%attr(755,root,root) %{_libdir}/lxdm-session
+%attr(755,root,root) %{_libexecdir}/lxdm-greeter-gdk
+%attr(755,root,root) %{_libexecdir}/lxdm-numlock
+%attr(755,root,root) %{_libexecdir}/lxdm-session
 %{_datadir}/%{name}
 %{systemdunitdir}/lxdm.service
 
